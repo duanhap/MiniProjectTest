@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">MiniProjectTest</string>
+    <string name="app_name">ShopStyle</string>
+    <string name="login">Đăng Nhập</string>
+    <string name="username">Tên tài khoản</string>
+    <string name="password">Mật khẩu</string>
+    <string name="welcome_back">Chào mừng trở lại!</string>
+    <string name="sign_in_subtitle">Đăng nhập để khám phá thời trang</string>
+    <string name="home">Trang Chủ</string>
+    <string name="cart">Giỏ Hàng</string>
+    <string name="orders">Đơn Hàng</string>
+    <string name="profile">Cá Nhân</string>
+    <string name="all_categories">Tất cả</string>
+    <string name="search_hint">Tìm kiếm sản phẩm...</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
+    <string name="buy_now">Mua ngay</string>
+    <string name="empty_cart">Giỏ hàng trống</string>
+    <string name="total">Tổng cộng</string>
+    <string name="checkout">Đặt hàng</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="invalid_credentials">Tài khoản hoặc mật khẩu không đúng</string>
+    <string name="fill_all_fields">Vui lòng điền đầy đủ thông tin</string>
 </resources>

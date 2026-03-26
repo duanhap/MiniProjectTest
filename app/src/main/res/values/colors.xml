@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Brand Colors -->
+    <color name="primary">#6C63FF</color>
+    <color name="primary_dark">#4A42D4</color>
+    <color name="primary_light">#9B95FF</color>
+    <color name="secondary">#FF6584</color>
+    <color name="accent">#43E97B</color>
+
+    <!-- Background -->
+    <color name="bg_dark">#0F0F1A</color>
+    <color name="bg_card">#1A1A2E</color>
+    <color name="bg_surface">#16213E</color>
+    <color name="bg_elevated">#222244</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0CC</color>
+    <color name="text_hint">#5A5A7A</color>
+    <color name="text_price">#FFD700</color>
+
+    <!-- Status -->
+    <color name="success">#43E97B</color>
+    <color name="error">#FF6584</color>
+    <color name="warning">#FFA726</color>
+
+    <!-- Misc -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="divider">#2A2A4A</color>
+    <color name="ripple">#33FFFFFF</color>
+
+    <!-- Gradient stops (used in code) -->
+    <color name="gradient_start">#6C63FF</color>
+    <color name="gradient_end">#FF6584</color>
+
+    <!-- Bottom nav -->
+    <color name="nav_selected">#6C63FF</color>
+    <color name="nav_unselected">#5A5A7A</color>
+
+    <!-- Badge -->
+    <color name="badge_bg">#FF6584</color>
 </resources>
