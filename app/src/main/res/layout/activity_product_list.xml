@@ -1,64 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout 
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_bio_screen_gradient"
+    android:background="@color/colorBackground"
     tools:context=".ProductListActivity"
     tools:ignore="HardcodedText">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:background="@color/colorSurface"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginHorizontal="8dp"
             app:title="Products"
-            app:titleTextColor="?attr/colorOnSurface"
+            app:titleTextColor="@color/colorOnSurface"
             app:layout_scrollFlags="scroll|enterAlways" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+
     </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/headerProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="88dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Explore products"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Use search to find exactly what you need"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?android:attr/textColorSecondary" />
-
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProducts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="12dp"
-        android:paddingTop="168dp"
+        android:padding="10dp"
+        android:paddingBottom="20dp"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_product"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

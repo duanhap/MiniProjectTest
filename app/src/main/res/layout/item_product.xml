@@ -1,61 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView 
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardProduct"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="1dp"
-    app:cardBackgroundColor="?attr/colorSurface"
-    app:strokeColor="@color/bio_border"
+    android:layout_margin="6dp"
+    android:foreground="@drawable/ripple_card"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
     app:strokeWidth="1dp"
+    app:strokeColor="@color/colorDivider"
+    app:cardBackgroundColor="@color/colorSurface"
     tools:ignore="HardcodedText">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="12dp">
+        android:layout_height="wrap_content">
 
+        <!-- Product image -->
         <ImageView
             android:id="@+id/ivProductImage"
             android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_height="155dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/bg_bio_accent_circle"
+            android:background="#F3F4F6"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Gradient scrim at bottom of image -->
+        <View
+            android:id="@+id/imageScrim"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="#33000000"
+            app:layout_constraintBottom_toBottomOf="@id/ivProductImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Product name -->
         <TextView
             android:id="@+id/tvProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginHorizontal="12dp"
-            tools:text="Demo Product Name"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurface"
+            tools:text="Áo Thun Trắng"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorOnSurface"
             android:maxLines="2"
             android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
             app:layout_constraintTop_toBottomOf="@id/ivProductImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Price badge pill -->
         <TextView
             android:id="@+id/tvProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="12dp"
-            tools:text="$99.00"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="?attr/colorPrimary"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            tools:text="$99"
+            android:textSize="12sp"
             android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/bg_price_badge"
             app:layout_constraintTop_toBottomOf="@id/tvProductName"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

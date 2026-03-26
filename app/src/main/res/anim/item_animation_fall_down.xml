@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Staggered item entry: translate from bottom + fade -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:fromYDelta="40dp"
+        android:toYDelta="0"
+        android:duration="360"
+        android:interpolator="@android:interpolator/decelerate_quint" />
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="360"
+        android:interpolator="@android:interpolator/decelerate_quint" />
+</set>

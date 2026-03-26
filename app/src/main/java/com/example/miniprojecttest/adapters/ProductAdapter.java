@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private Context context;
     private List<Product> productList;
+    // Track last animated position for stagger effect
+    private int lastPosition = -1;
 
     public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
@@ -41,24 +45,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.tvProductName.setText(product.getName());
-        holder.tvProductPrice.setText(String.format("$%.2f", product.getPrice()));
+        holder.tvProductPrice.setText(String.format("$%.0f", product.getPrice()));
         holder.ivProductImage.setImageResource(
-            DatabaseSeeder.getDrawableId(context, product.getImage())
+                DatabaseSeeder.getDrawableId(context, product.getImage())
         );
 
+        // Staggered item entrance animation
+        if (position > lastPosition) {
+            Animation anim = AnimationUtils.loadAnimation(context, R.anim.item_animation_fall_down);
+            anim.setStartOffset(position * 40L); // Stagger by 40ms per item
+            holder.itemView.startAnimation(anim);
+            lastPosition = position;
+        }
+
         holder.itemView.setOnClickListener(v -> {
-            SessionManager sessionManager = new SessionManager(context);
-            Intent intent;
-
-            if (!sessionManager.isLoggedIn()) {
-                intent = new Intent(context, LoginActivity.class);
-                intent.putExtra(LoginActivity.EXTRA_PRODUCT_ID, product.getId());
-            } else {
-                intent = new Intent(context, ProductDetailActivity.class);
-                intent.putExtra("productId", product.getId());
-            }
-
-            context.startActivity(intent);
+            // Press scale effect
+            v.animate().scaleX(0.95f).scaleY(0.95f).setDuration(80).withEndAction(() ->
+                v.animate().scaleX(1f).scaleY(1f).setDuration(80).withEndAction(() -> {
+                    SessionManager sessionManager = new SessionManager(context);
+                    Intent intent;
+                    if (!sessionManager.isLoggedIn()) {
+                        intent = new Intent(context, LoginActivity.class);
+                        intent.putExtra(LoginActivity.EXTRA_PRODUCT_ID, product.getId());
+                    } else {
+                        intent = new Intent(context, ProductDetailActivity.class);
+                        intent.putExtra("productId", product.getId());
+                    }
+                    context.startActivity(intent);
+                }).start()
+            ).start();
         });
     }
 
@@ -69,6 +84,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public void updateProducts(List<Product> products) {
         this.productList = products;
+        lastPosition = -1;
         notifyDataSetChanged();
     }
 

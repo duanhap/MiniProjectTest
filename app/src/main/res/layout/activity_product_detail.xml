@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/colorBackground"
     tools:context=".ProductDetailActivity"
     tools:ignore="HardcodedText">
 
+    <!-- Collapsing image header -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="300dp"
         android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
@@ -29,7 +30,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="#D6D6D6"
+                android:background="#E5E7EB"
+                app:layout_collapseMode="parallax" />
+
+            <!-- Dark gradient at bottom of image -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:background="#40000000"
                 app:layout_collapseMode="parallax" />
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -42,6 +51,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Content scroll -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,78 +62,88 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp"
-            android:paddingBottom="100dp">
+            android:paddingBottom="120dp">
 
+            <!-- Product title -->
             <TextView
                 android:id="@+id/tvDetailTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Demo Premium Product Name - 2024 Edition"
-                android:textAppearance="?attr/textAppearanceHeadline5"
-                android:textColor="?attr/colorOnSurface"
-                android:textStyle="bold" />
+                tools:text="Áo Hoodie Unisex"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorOnSurface"
+                android:lineSpacingMultiplier="1.15"
+                android:letterSpacing="-0.02" />
 
+            <!-- Price -->
             <TextView
                 android:id="@+id/tvDetailPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                tools:text="$199.99"
-                android:textAppearance="?attr/textAppearanceHeadline4"
-                android:textColor="?attr/colorPrimary"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                tools:text="420,000 đ"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:letterSpacing="-0.02" />
 
+            <!-- Divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="?attr/colorOutlineVariant" />
+                android:layout_width="40dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorPrimary" />
 
+            <!-- Description label -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextSecondary" />
 
+            <!-- Description body -->
             <TextView
                 android:id="@+id/tvDetailDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="This is an amazing product that solves all your problems. Crafted with high quality materials and designed for max productivity."
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="?android:attr/textColorSecondary"
-                android:lineSpacingExtra="4dp" />
+                android:layout_marginTop="10dp"
+                tools:text="This is an amazing product crafted with premium quality materials designed for everyday use and maximum comfort."
+                android:textSize="14sp"
+                android:textColor="@color/colorTextSecondary"
+                android:lineSpacingExtra="5dp" />
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavAddCart"
+    <!-- Sticky bottom bar -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/colorSurface"
+        android:background="@color/colorSurface"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="16dp"
         app:elevation="8dp">
-        
-        <RelativeLayout
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddToCart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-            
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddToCart"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Add to Cart"
-                android:textSize="18sp"
-                app:icon="@android:drawable/ic_input_add"
-                app:iconGravity="textStart" />
-        </RelativeLayout>
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+            android:layout_height="52dp"
+            android:text="Add to Cart"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconGravity="textStart" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

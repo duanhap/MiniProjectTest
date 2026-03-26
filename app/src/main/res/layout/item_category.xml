@@ -6,12 +6,15 @@
     android:id="@+id/cardCategory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
+    android:foreground="@drawable/ripple_card"
+    android:clickable="true"
+    android:focusable="true"
     app:cardCornerRadius="16dp"
-    app:cardElevation="1dp"
-    app:cardBackgroundColor="?attr/colorSurface"
-    app:strokeColor="@color/bio_border"
+    app:cardElevation="0dp"
     app:strokeWidth="1dp"
+    app:strokeColor="@color/colorDivider"
+    app:cardBackgroundColor="@color/colorSurface"
     tools:ignore="HardcodedText">
 
     <LinearLayout
@@ -19,25 +22,40 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="16dp"
+        android:paddingHorizontal="8dp">
 
-        <ImageView
-            android:id="@+id/ivCategoryIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/bio_green_primary" />
+        <!-- Circular icon container -->
+        <FrameLayout
+            android:layout_width="54dp"
+            android:layout_height="54dp">
+
+            <View
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_category_icon_circle" />
+
+            <ImageView
+                android:id="@+id/ivCategoryIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_gallery"
+                app:tint="@color/colorPrimary" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="Electronics"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="10dp"
+            tools:text="Áo"
+            android:textSize="12sp"
+            android:textColor="@color/colorOnSurface"
             android:textStyle="bold"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:letterSpacing="0.01" />
 
     </LinearLayout>
 

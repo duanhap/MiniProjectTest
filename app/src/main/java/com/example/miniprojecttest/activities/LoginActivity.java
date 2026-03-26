@@ -3,6 +3,9 @@ package com.example.miniprojecttest.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import com.example.miniprojecttest.dal.DatabaseSeeder;
 import com.example.miniprojecttest.entities.User;
 import com.example.miniprojecttest.session.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.card.MaterialCardView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,9 +48,27 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Entrance animations
+        View heroBlock = findViewById(R.id.heroBlock);
+        MaterialCardView formCard = findViewById(R.id.formCard);
+        if (heroBlock != null) {
+            heroBlock.setAlpha(0f);
+            heroBlock.animate().alpha(1f).setDuration(500).start();
+        }
+        if (formCard != null) {
+            Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade_in);
+            slideUp.setStartOffset(200);
+            formCard.startAnimation(slideUp);
+        }
+
         Button btnLogin = findViewById(R.id.btnLogin);
         if (btnLogin != null) {
-            btnLogin.setOnClickListener(v -> login());
+            btnLogin.setOnClickListener(v -> {
+                // Scale press feedback
+                v.animate().scaleX(0.96f).scaleY(0.96f).setDuration(80).withEndAction(() ->
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(80).withEndAction(this::login).start()
+                ).start();
+            });
         }
     }
 

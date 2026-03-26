@@ -4,40 +4,81 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        
+
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
-        
+
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
-        
+
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
-        
-        <!-- Typography: optional, standard M3 typography will apply by default -->
-        
+
         <!-- Shape appearance -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+
+        <!-- Window transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
     </style>
 
     <style name="Theme.MiniProjectTest" parent="Base.Theme.MiniProjectTest" />
-    
-    <!-- Shape Definitions -->
+
+    <!-- Shape Definitions - more rounded for modern feel -->
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">10dp</item>
     </style>
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">12dp</item>
+        <item name="cornerSize">16dp</item>
     </style>
     <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
+        <item name="cornerSize">20dp</item>
     </style>
+
+    <!-- Card style: flat, border only, no heavy shadow -->
+    <style name="Widget.App.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/colorDivider</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+    </style>
+
+    <!-- Primary Button: full width, rounded, bold -->
+    <style name="Widget.App.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+
+    <!-- Toolbar style -->
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/colorSurface</item>
+        <item name="titleTextColor">@color/colorOnSurface</item>
+        <item name="titleTextAppearance">@style/TextAppearance.App.Toolbar.Title</item>
+    </style>
+
+    <style name="TextAppearance.App.Toolbar.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <!-- Smooth screen slide transitions -->
+    <style name="WindowAnimationStyle" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
 </resources>

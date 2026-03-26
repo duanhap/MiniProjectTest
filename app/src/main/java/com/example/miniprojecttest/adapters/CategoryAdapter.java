@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context context;
     private List<Category> categoryList;
+    private int lastPosition = -1;
 
     public CategoryAdapter(Context context, List<Category> categoryList) {
         this.context = context;
@@ -39,10 +42,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category category = categoryList.get(position);
         holder.tvCategoryName.setText(category.getName());
 
+        // Staggered entrance animation
+        if (position > lastPosition) {
+            Animation anim = AnimationUtils.loadAnimation(context, R.anim.item_animation_fall_down);
+            anim.setStartOffset(position * 50L);
+            holder.itemView.startAnimation(anim);
+            lastPosition = position;
+        }
+
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ProductListActivity.class);
-            intent.putExtra("categoryId", category.getId());
-            context.startActivity(intent);
+            // Press scale feedback
+            v.animate().scaleX(0.93f).scaleY(0.93f).setDuration(80).withEndAction(() ->
+                v.animate().scaleX(1f).scaleY(1f).setDuration(80).withEndAction(() -> {
+                    Intent intent = new Intent(context, ProductListActivity.class);
+                    intent.putExtra("categoryId", category.getId());
+                    context.startActivity(intent);
+                }).start()
+            ).start();
         });
     }
 

@@ -5,25 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/colorBackground"
     tools:context=".CheckoutActivity"
     tools:ignore="HardcodedText">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface">
+        android:background="@color/colorSurface"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarCheckout"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Checkout"
-            app:titleTextColor="?attr/colorOnSurface"
+            app:title="Cart"
+            app:titleTextColor="@color/colorOnSurface"
             app:navigationIcon="@android:drawable/ic_menu_revert" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Scrollable content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,16 +42,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:paddingBottom="100dp">
+            android:paddingBottom="130dp">
 
+            <!-- Section: Order Items header -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
                 android:text="Order Items"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
+                android:textSize="13sp"
+                android:textAllCaps="true"
+                android:letterSpacing="0.08"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:textColor="@color/colorTextSecondary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCheckoutItems"
@@ -54,110 +65,150 @@
                 tools:itemCount="2"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
-                android:background="?attr/colorOutlineVariant" />
+                android:background="@color/colorDivider" />
 
+            <!-- Order Summary header -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
                 android:text="Order Summary"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
+                android:textSize="13sp"
+                android:textAllCaps="true"
+                android:letterSpacing="0.08"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:textColor="@color/colorTextSecondary" />
 
-            <RelativeLayout
+            <!-- Summary card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/colorDivider"
+                app:cardBackgroundColor="@color/colorSurface">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Subtotal"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tvCheckoutSubtotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    tools:text="$399.98"
-                    android:textColor="?attr/colorOnSurface" />
-            </RelativeLayout>
+                    <!-- Subtotal row -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subtotal"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorTextSecondary"
+                            android:layout_centerVertical="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tax (5%)"
-                    android:textColor="?android:attr/textColorSecondary" />
+                        <TextView
+                            android:id="@+id/tvCheckoutSubtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            tools:text="$399.98"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorOnSurface"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvCheckoutTax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    tools:text="$20.00"
-                    android:textColor="?attr/colorOnSurface" />
-            </RelativeLayout>
+                    <!-- Tax row -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="?attr/colorOutlineVariant" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tax (5%)"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorTextSecondary"
+                            android:layout_centerVertical="true" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                        <TextView
+                            android:id="@+id/tvCheckoutTax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            tools:text="$20.00"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorOnSurface" />
+                    </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textStyle="bold" />
+                    <!-- Divider line -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="@color/colorDivider" />
 
-                <TextView
-                    android:id="@+id/tvCheckoutTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    tools:text="$419.98"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorPrimary"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                    <!-- Total row -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorOnSurface"
+                            android:layout_centerVertical="true" />
+
+                        <TextView
+                            android:id="@+id/tvCheckoutTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            tools:text="$419.98"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Sticky Pay button -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/colorSurface"
-        android:padding="16dp"
+        android:background="@color/colorSurface"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="16dp"
         app:elevation="8dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitOrder"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:text="Pay Now"
-            android:textSize="18sp" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+
     </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

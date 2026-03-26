@@ -2,119 +2,213 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground">
+    android:background="@color/colorBackground"
+    tools:ignore="HardcodedText">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface">
+        android:background="@color/colorSurface"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarInvoice"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@android:drawable/ic_menu_revert"
-            app:title="Invoice"
-            app:titleTextColor="?attr/colorOnSurface" />
+            app:title="Order Confirmed"
+            app:titleTextColor="@color/colorOnSurface" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Payment successful"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Your order has been confirmed"
-            android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:cardCornerRadius="14dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
+            <!-- Success icon + text -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:gravity="center"
+                android:paddingTop="24dp"
+                android:paddingBottom="28dp">
+
+                <!-- Checkmark circle -->
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp">
+
+                    <View
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@color/colorSuccessLight" />
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/checkbox_on_background"
+                        app:tint="@color/colorSuccess" />
+
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order ID"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-                <TextView
-                    android:id="@+id/tvInvoiceOrderId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="16dp"
+                    android:text="Payment Successful!"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorOnBackground"
+                    android:letterSpacing="-0.01" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Order Date"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-                <TextView
-                    android:id="@+id/tvInvoiceDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Status"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-                <TextView
-                    android:id="@+id/tvInvoiceStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Total"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-                <TextView
-                    android:id="@+id/tvInvoiceTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="6dp"
+                    android:text="Your order has been confirmed"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorTextSecondary" />
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+            <!-- Order detail card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/colorDivider"
+                app:cardBackgroundColor="@color/colorSurface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Row: Order ID -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ORDER ID"
+                        android:textSize="11sp"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/colorTextSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvInvoiceOrderId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="18dp"
+                        tools:text="#0042"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorOnSurface" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@color/colorDivider" />
+
+                    <!-- Row: Order Date -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ORDER DATE"
+                        android:textSize="11sp"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/colorTextSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvInvoiceDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="18dp"
+                        tools:text="2026-03-26 23:04"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorOnSurface" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@color/colorDivider" />
+
+                    <!-- Row: Status -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STATUS"
+                        android:textSize="11sp"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/colorTextSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvInvoiceStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="18dp"
+                        tools:text="Paid ✓"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSuccess" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@color/colorDivider" />
+
+                    <!-- Row: Total -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TOTAL AMOUNT"
+                        android:textSize="11sp"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/colorTextSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvInvoiceTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        tools:text="$420,000"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:letterSpacing="-0.02" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

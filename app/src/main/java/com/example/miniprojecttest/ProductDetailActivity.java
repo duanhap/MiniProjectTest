@@ -2,6 +2,8 @@ package com.example.miniprojecttest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,12 +72,35 @@ public class ProductDetailActivity extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(v -> finish());
         }
 
+        // Animate content on enter
+        if (tvDetailTitle != null) {
+            Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade_in);
+            slideUp.setStartOffset(100);
+            tvDetailTitle.startAnimation(slideUp);
+        }
+        if (tvDetailPrice != null) {
+            Animation slideUp2 = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade_in);
+            slideUp2.setStartOffset(180);
+            tvDetailPrice.startAnimation(slideUp2);
+        }
+        if (btnAddToCart != null) {
+            Animation popIn = AnimationUtils.loadAnimation(this, R.anim.scale_pop_in);
+            popIn.setStartOffset(350);
+            btnAddToCart.startAnimation(popIn);
+        }
+
         btnAddToCart.setOnClickListener(v -> {
             if (product != null) {
-                addToPendingOrderAndCheckout();
+                // Bounce press effect
+                v.animate().scaleX(0.92f).scaleY(0.92f).setDuration(100).withEndAction(() ->
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(150).withEndAction(
+                        this::addToPendingOrderAndCheckout
+                    ).start()
+                ).start();
             }
         });
     }
+
 
     private void addToPendingOrderAndCheckout() {
         if (!sessionManager.isLoggedIn()) {
