@@ -1,5 +1,6 @@
 package com.example.miniprojecttest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.miniprojecttest.dal.ProductDAO;
 import com.example.miniprojecttest.entities.Order;
 import com.example.miniprojecttest.entities.OrderDetail;
 import com.example.miniprojecttest.entities.Product;
+import com.example.miniprojecttest.session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private AppDatabase db;
     private CheckoutAdapter checkoutAdapter;
+    private SessionManager sessionManager;
+    private int currentOrderId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +48,45 @@ public class CheckoutActivity extends AppCompatActivity {
         btnSubmitOrder = findViewById(R.id.btnSubmitOrder);
 
         db = AppDatabase.getInstance(this);
+        sessionManager = new SessionManager(this);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbarCheckout);
         if (toolbar != null) {
             toolbar.setNavigationOnClickListener(v -> finish());
         }
 
-        int orderId = getIntent().getIntExtra("orderId", -1);
-        if (orderId != -1) {
-            loadOrderData(orderId);
-        } else {
-            Toast.makeText(this, "No Order ID provided", Toast.LENGTH_SHORT).show();
-        }
+        resolveAndLoadOrder();
 
         btnSubmitOrder.setOnClickListener(v -> {
-            Toast.makeText(this, "Order Submitted!", Toast.LENGTH_SHORT).show();
-            finish();
+            submitOrder();
         });
+    }
+
+    private void resolveAndLoadOrder() {
+        int orderIdFromIntent = getIntent().getIntExtra("orderId", -1);
+
+        if (orderIdFromIntent != -1) {
+            currentOrderId = orderIdFromIntent;
+            loadOrderData(currentOrderId);
+            return;
+        }
+
+        if (!sessionManager.isLoggedIn()) {
+            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        int userId = sessionManager.getUserId();
+        Order pendingOrder = db.orderDAO().findPendingByUserId(userId);
+        if (pendingOrder == null) {
+            Toast.makeText(this, "No pending order", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        currentOrderId = pendingOrder.getId();
+        loadOrderData(currentOrderId);
     }
 
     private void loadOrderData(int orderId) {
@@ -85,19 +111,28 @@ public class CheckoutActivity extends AppCompatActivity {
             checkoutAdapter = new CheckoutAdapter(this, items);
             rvCheckoutItems.setAdapter(checkoutAdapter);
             
-            double tax = subtotal * 0.05; // 5% tax from XML example
+            double tax = subtotal * 0.05;
             double total = subtotal + tax;
 
             tvCheckoutSubtotal.setText(String.format("$%.2f", subtotal));
             tvCheckoutTax.setText(String.format("$%.2f", tax));
             tvCheckoutTotal.setText(String.format("$%.2f", total));
-            
-            // Optionally update the total price in DB
-            if (order.getTotalPrice() != total) {
-                // Wait, Order doesn't have an update method in DAO?
-                // Not required.
-            }
 
         }
+    }
+
+    private void submitOrder() {
+        if (currentOrderId == -1) {
+            Toast.makeText(this, "No order selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        OrderDAO orderDAO = db.orderDAO();
+        orderDAO.updateStatus(currentOrderId, "Paid");
+
+        Intent invoiceIntent = new Intent(this, InvoiceActivity.class);
+        invoiceIntent.putExtra("orderId", currentOrderId);
+        startActivity(invoiceIntent);
+        finish();
     }
 }

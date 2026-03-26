@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojecttest.R;
+import com.example.miniprojecttest.dal.DatabaseSeeder;
 import com.example.miniprojecttest.entities.OrderDetail;
 import com.example.miniprojecttest.entities.Product;
 
@@ -49,8 +50,12 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
         
         if (item.product != null) {
             holder.tvCheckoutName.setText(item.product.getName());
+            holder.ivCheckoutThumb.setImageResource(
+                    DatabaseSeeder.getDrawableId(context, item.product.getImage())
+            );
         } else {
             holder.tvCheckoutName.setText("Product " + item.orderDetail.getProductId());
+            holder.ivCheckoutThumb.setImageResource(android.R.drawable.ic_menu_gallery);
         }
         
         holder.tvCheckoutQuantity.setText("Qty: " + item.orderDetail.getQuantity());

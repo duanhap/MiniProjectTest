@@ -10,15 +10,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.miniprojecttest.dal.AppDatabase;
+import com.example.miniprojecttest.dal.DatabaseSeeder;
 import com.example.miniprojecttest.dal.OrderDAO;
 import com.example.miniprojecttest.dal.OrderDetailDAO;
 import com.example.miniprojecttest.dal.ProductDAO;
 import com.example.miniprojecttest.entities.Order;
 import com.example.miniprojecttest.entities.OrderDetail;
 import com.example.miniprojecttest.entities.Product;
+import com.example.miniprojecttest.activities.LoginActivity;
+import com.example.miniprojecttest.session.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -31,6 +35,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private AppDatabase db;
     private Product product;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btnAddToCart);
 
         db = AppDatabase.getInstance(this);
+        sessionManager = new SessionManager(this);
         ProductDAO productDAO = db.productDAO();
 
         int productId = getIntent().getIntExtra("productId", -1);
@@ -53,6 +59,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                 tvDetailTitle.setText(product.getName());
                 tvDetailPrice.setText(String.format("$%.2f", product.getPrice()));
                 tvDetailDescription.setText("Description for " + product.getName() + ".\nHigh quality materials.");
+                ivProductDetailImage.setImageResource(
+                        DatabaseSeeder.getDrawableId(this, product.getImage())
+                );
             }
         }
 
@@ -63,28 +72,63 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         btnAddToCart.setOnClickListener(v -> {
             if (product != null) {
-                createOrderAndCheckout();
+                addToPendingOrderAndCheckout();
             }
         });
     }
 
-    private void createOrderAndCheckout() {
+    private void addToPendingOrderAndCheckout() {
+        if (!sessionManager.isLoggedIn()) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            loginIntent.putExtra(LoginActivity.EXTRA_PRODUCT_ID, product.getId());
+            startActivity(loginIntent);
+            finish();
+            return;
+        }
+
+        int userId = sessionManager.getUserId();
+        if (userId <= 0) {
+            Toast.makeText(this, "Invalid user session. Please login again.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         OrderDAO orderDAO = db.orderDAO();
         OrderDetailDAO orderDetailDAO = db.orderDetailDAO();
 
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-        
-        // Setup a mock user id for the order, assuming user ID 1 exists
-        Order newOrder = new Order(1, currentDate, product.getPrice());
-        long orderId = orderDAO.insert(newOrder);
+        Order pendingOrder = orderDAO.findPendingByUserId(userId);
+        int orderId;
+        if (pendingOrder == null) {
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+            Order newOrder = new Order(userId, currentDate, 0, "Pending");
+            orderId = (int) orderDAO.insert(newOrder);
+        } else {
+            orderId = pendingOrder.getId();
+        }
 
-        OrderDetail detail = new OrderDetail((int) orderId, product.getId(), 1, product.getPrice());
-        orderDetailDAO.insert(detail);
+        OrderDetail existingDetail = orderDetailDAO.findByOrderIdAndProductId(orderId, product.getId());
+        if (existingDetail == null) {
+            OrderDetail detail = new OrderDetail(orderId, product.getId(), 1, product.getPrice());
+            orderDetailDAO.insert(detail);
+        } else {
+            int newQuantity = existingDetail.getQuantity() + 1;
+            orderDetailDAO.updateQuantityAndPrice(existingDetail.getId(), newQuantity, product.getPrice());
+        }
 
-        Toast.makeText(this, "Added to Cart!", Toast.LENGTH_SHORT).show();
+        updateOrderTotal(orderId, orderDAO, orderDetailDAO);
+
+        Toast.makeText(this, "Added to pending order", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(ProductDetailActivity.this, CheckoutActivity.class);
-        intent.putExtra("orderId", (int) orderId);
+        intent.putExtra("orderId", orderId);
         startActivity(intent);
+    }
+
+    private void updateOrderTotal(int orderId, OrderDAO orderDAO, OrderDetailDAO orderDetailDAO) {
+        List<OrderDetail> details = orderDetailDAO.findByOrderId(orderId);
+        double total = 0;
+        for (OrderDetail detail : details) {
+            total += detail.getQuantity() * detail.getUnitPrice();
+        }
+        orderDAO.updateTotalPrice(orderId, total);
     }
 }

@@ -14,7 +14,7 @@ import com.example.miniprojecttest.entities.User;
 
 @Database(
         entities = {User.class, Category.class, Product.class, Order.class, OrderDetail.class},
-        version = 1,
+    version = 2,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {

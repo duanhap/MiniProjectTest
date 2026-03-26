@@ -18,11 +18,9 @@ public class DatabaseSeeder {
         AppDatabase db = AppDatabase.getInstance(context);
 
         // ── 1. Seed Users ──────────────────────────────────────────────
-        if (db.userDAO().getAll().isEmpty()) {
-            db.userDAO().insert(new User("admin", "admin123"));
-            db.userDAO().insert(new User("nguyen_van_a", "123456"));
-            db.userDAO().insert(new User("tran_thi_b", "123456"));
-        }
+        ensureUserExists(db, "admin", "admin123");
+        ensureUserExists(db, "nguyen_van_a", "123456");
+        ensureUserExists(db, "tran_thi_b", "123456");
 
         // ── 2. Seed Categories ─────────────────────────────────────────
         if (db.categoryDAO().getAll().isEmpty()) {
@@ -59,5 +57,11 @@ public class DatabaseSeeder {
         int resId = context.getResources().getIdentifier(
                 imageName, "drawable", context.getPackageName());
         return resId != 0 ? resId : android.R.drawable.ic_menu_gallery;
+    }
+
+    private static void ensureUserExists(AppDatabase db, String username, String password) {
+        if (db.userDAO().findByUsername(username) == null) {
+            db.userDAO().insert(new User(username, password));
+        }
     }
 }

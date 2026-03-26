@@ -7,9 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="1dp"
     app:cardBackgroundColor="?attr/colorSurface"
+    app:strokeColor="@color/bio_border"
+    app:strokeWidth="1dp"
     tools:ignore="HardcodedText">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
-            android:background="#E0E0E0"
+            android:background="@drawable/bg_bio_accent_circle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

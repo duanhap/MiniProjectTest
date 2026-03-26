@@ -22,4 +22,13 @@ public interface OrderDAO {
 
     @Query("SELECT * FROM orders WHERE userId = :userId")
     List<Order> findByUserId(int userId);
+
+    @Query("SELECT * FROM orders WHERE userId = :userId AND status = 'Pending' LIMIT 1")
+    Order findPendingByUserId(int userId);
+
+    @Query("UPDATE orders SET status = :status WHERE id = :orderId")
+    void updateStatus(int orderId, String status);
+
+    @Query("UPDATE orders SET totalPrice = :totalPrice WHERE id = :orderId")
+    void updateTotalPrice(int orderId, double totalPrice);
 }

@@ -22,4 +22,10 @@ public interface ProductDAO {
 
     @Query("SELECT * FROM products WHERE categoryId = :categoryId")
     List<Product> findByCategoryId(int categoryId);
+
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%' ORDER BY name ASC")
+    List<Product> searchByName(String keyword);
+
+    @Query("SELECT * FROM products WHERE categoryId = :categoryId AND name LIKE '%' || :keyword || '%' ORDER BY name ASC")
+    List<Product> searchByCategoryAndName(int categoryId, String keyword);
 }

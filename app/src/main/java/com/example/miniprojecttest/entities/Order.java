@@ -18,13 +18,19 @@ public class Order {
     private int userId;
     private String orderDate;
     private double totalPrice;
+    private String status;
 
     public Order() {}
 
     public Order(int userId, String orderDate, double totalPrice) {
+        this(userId, orderDate, totalPrice, "Pending");
+    }
+
+    public Order(int userId, String orderDate, double totalPrice, String status) {
         this.userId = userId;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
+        this.status = status;
     }
 
     public int getId() { return id; }
@@ -38,4 +44,7 @@ public class Order {
 
     public double getTotalPrice() { return totalPrice; }
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

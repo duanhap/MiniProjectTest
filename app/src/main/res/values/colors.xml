@@ -22,4 +22,12 @@
     
     <color name="colorTextSecondary">#757575</color>
     <color name="colorDivider">#E0E0E0</color>
+
+    <!-- Bio style palette used by bg_bio_* drawables -->
+    <color name="bio_bg">#F5FBF7</color>
+    <color name="bio_surface">#FFFFFFFF</color>
+    <color name="bio_border">#D6E9DC</color>
+    <color name="bio_green_primary">#2F9E62</color>
+    <color name="bio_green_soft">#95D5B2</color>
+    <color name="bio_sky">#8ECAE6</color>
 </resources>
